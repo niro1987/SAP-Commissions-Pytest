@@ -1,0 +1,10 @@
+# Ignore python cache
+**/__pycache__
+**/.pytest_cache
+
+# Ignore source
+source/*
+!source/.gitkeep
+
+# Ignore pytest-html output
+report.html
