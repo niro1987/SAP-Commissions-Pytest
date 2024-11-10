@@ -1,6 +1,8 @@
-# SAP Commissions PyTests
+# SAP Incentive Management ODI, XDL File Types PyTests
 
-Test for various SAP Commissions ODI file templates.
+Test for various SAP Incentive Management ODI. XDL file templates.
+
+[SAP Incentive Management XDL File Templates](https://help.sap.com/docs/SAP_Commissions/0e4b0e05f53e4f87a21c5ccfca72fea6/726cf84c7c231014a804993ce4041860.html)
 
 ## Installation
 
@@ -18,8 +20,9 @@ Test for various SAP Commissions ODI file templates.
 
 ## Usage
 
-1. Place your ODI files in the `source` directory.
-2. Run tests.
+1. Place your ODI files in the `source` directory.  [Added Samples in Source folder - Delete and replace with your files]
+2. Currently TXSTA and TXTA is available for Unit Testing. To add other file types.. Go to fixtures\headers folder with adding your file types and custom file types
+3. Run tests.
 
     ```bash
     python -m pytest

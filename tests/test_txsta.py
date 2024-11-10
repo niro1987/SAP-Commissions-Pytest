@@ -5,7 +5,7 @@ from typing import Final
 
 import pytest
 
-from .common import GenericTests, load_header, source_files
+from .common import GenericTests, source_files, load_header
 
 TXSTA: Final[str] = "TXSTA"
 TXTA: Final[str] = "TXTA"
@@ -17,7 +17,7 @@ pytestmark = pytest.mark.skipif(
         len(source_files(TXSTA)) == 0
         and len(source_files(TXTA)) == 0
     ),
-    reason=f"No TXSTA or TXTA files found."
+    reason="No TXSTA or TXTA files found."
 )
 
 
@@ -77,20 +77,23 @@ class TestTXSTA_TXTA:
     )
     def test_txta_in_txsta(self, txsta_file: Path, txta_file: Path) -> None:
         """Test every assignment in TXTA is joined by a transaction in TXSTA."""
-        txsta_reader = csv.reader(
-            txsta_file.read_text("utf-8").splitlines(),
-            delimiter="\t",
-        )
-        txta_reader = csv.reader(
-            txta_file.read_text("utf-8").splitlines(),
-            delimiter="\t",
-        )
+        txsta_content = txsta_file.read_text("utf-8").splitlines()
+        txta_content = txta_file.read_text("utf-8").splitlines()        
+        
+        txsta_reader = csv.reader(txsta_content, delimiter="\t")
+        txta_reader = csv.reader(txta_content, delimiter="\t")
 
-        txsta_keys = [tuple(row[:4]) for row in txsta_reader]
-        assert all(
-            tuple(row[:4]) in txsta_keys for row in txta_reader
-        ), "Every assignment in TXTA is joined by a transaction in TXSTA"
+        txsta_keys = {tuple(row[:4]) for row in txsta_reader}
+        txta_keys = {tuple(row[:4]) for row in txta_reader}
+        
+        assert txta_keys.issubset(txsta_keys), "Every assignment in TXTA should have a corresponding transaction in TXSTA"
 
+    def test_template_in_headers(self) -> None:
+        """Test that the template name is present in the file headers."""
+        for file in source_files():
+            headers = load_header(file.stem.split('_')[1])
+            assert TXSTA in headers or TXTA in headers, \
+                f"Template name {TXSTA} or {TXTA} not found in headers of {file.name}"
 
 class TestTXSTA(GenericTests):
     """Tests for individual TXSTA files."""
