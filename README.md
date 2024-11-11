@@ -4,7 +4,7 @@ Test for various SAP Incentive Management ODI.XDL file templates. Below is the r
 
 [SAP Incentive Management XDL File Templates](https://help.sap.com/docs/SAP_Commissions/0e4b0e05f53e4f87a21c5ccfca72fea6/726cf84c7c231014a804993ce4041860.html)
 
-### Installation
+## Installation
 
 1. Clone the repository to your local machine:
 
