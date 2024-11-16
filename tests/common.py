@@ -43,7 +43,9 @@ def load_header(template: str) -> list[str]:
         (path_manager.fixture_path / "headers" / f"{template}.txt")
         .read_text(encoding="utf-8")
     )
-    return header_text.splitlines()[0].split("\t")
+    headers = header_text.splitlines()[0].split("\t")
+    assert template in headers, f"Template name {template} not found in headers"
+    return headers
 
 
 def source_files(template: Optional[str] = None) -> list[Path]:
@@ -114,7 +116,7 @@ class GenericTests(Bootstrap):
         - The file is to contain no header rows.
         """
         filename: str = file.name
-        assert FILENAME_PATTERN.match(filename)
+        assert FILENAME_PATTERN.match(filename), f"Filename {filename} does not match the required pattern"
 
         file_content: str = file.read_text("utf-8")
         assert file_content, "File is empty or encoding is not unicode"
